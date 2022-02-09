@@ -14,7 +14,7 @@ import static pro.sky.course2CourseWork.constants.JavaQuestionServiceConstants.*
 public class JavaQuestionServiceTest {
 
     private JavaQuestionService out = new JavaQuestionService();
-    private Set<Question> testSet;
+    private Set<Question> allJavaQuestions;
 
     @BeforeEach
     public void startSetupJavaQuestionService() {
@@ -26,9 +26,8 @@ public class JavaQuestionServiceTest {
         out.add(question2);
         out.add(question3);
         out.add(question4);
-        testSet = new HashSet<Question>(Set.of(question1, question2, question3, question4));
+        allJavaQuestions = new HashSet<Question>(Set.of(question1, question2, question3, question4));
     }
-
     @Test
     public void shouldAddQuestionWhenItNotExists() {
         String result = out.add(QUESTION_FROM_QUESTION_WHO_IS_NOT_EXIST,
@@ -54,7 +53,7 @@ public class JavaQuestionServiceTest {
     @Test
     public void shouldReturnAllQuestions() {
         Collection<Question> result = out.getAll();
-        Assertions.assertEquals(testSet, result);
+        Assertions.assertEquals(allJavaQuestions, result);
     }
     @Test
     public void shouldRemoveQuestionWhenItAlreadyExists() {
@@ -70,6 +69,7 @@ public class JavaQuestionServiceTest {
     }
     @Test
     public void shouldThrowEmptyCollectionExceptionWhenGetRandomQuestionWhenNoQuestionsExist() {
+        //Делаем общий список вопросов пустым
         out.remove("Какой размер памяти для переменной short", "2 байта");
         out.remove("Какой размер памяти для переменной byte", "1 байта");
         out.remove("Какой размер памяти для переменной char", "2 байта");
@@ -79,6 +79,8 @@ public class JavaQuestionServiceTest {
     }
     @Test
     public void shouldReturnQuestionWhenGetRandomQuestion() {
+        //Делаем так, что бы общий список вопросов состоял из одного вопроса,
+        // тогда случайный выбор вопроса из этого списка вернет этот один вопрос
         out.remove("Какой размер памяти для переменной short", "2 байта");
         out.remove("Какой размер памяти для переменной byte", "1 байта");
         out.remove("Какой размер памяти для переменной char", "2 байта");

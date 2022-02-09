@@ -17,8 +17,6 @@ public class ExaminerServiceImpl implements ExaminerService {
         this.questionService = questionService;
     }
 
-//    private Set<Question> questionsForJavaExam;
-
     @Override
     public Collection<Question> getQuestions(int amount) {
         if (amount <= 0 || amount > questionService.getAll().size()) {

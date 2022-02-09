@@ -20,5 +20,6 @@ public class JavaQuestionServiceConstants {
             QUESTION_ALREADY_EXIST.toString();
     public static final Question QUESTION_RETURN_GET_RANDOM =
             new Question("Какой размер памяти для переменной int", "4 байта");
-
+    public static final int AMOUNT_BAD = 5;
+    public static final int AMOUNT_CORRECT = 1;
 }
