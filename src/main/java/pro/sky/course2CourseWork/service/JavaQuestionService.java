@@ -2,12 +2,10 @@ package pro.sky.course2CourseWork.service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.course2CourseWork.EmptyCollectionException;
+import pro.sky.course2CourseWork.QuestionNotFoundException;
 import pro.sky.course2CourseWork.domain.Question;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
@@ -33,21 +31,22 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public String remove(String question, String answer) {
         Question question1 = new Question(question, answer);
+        if (!questions.contains(question1)) {
+            throw new QuestionNotFoundException();
+        }
         questions.remove(question1);
         return question1.toString();
     }
 
     @Override
     public Question getRandomQuestion() {
-        Random objGenerator = new Random();
-        int iCount = 0;
-        int iRandom = objGenerator.nextInt(questions.size() - 1);
-        for (Question question: questions) {
-            if (iCount == iRandom) {
-                return question;
-            }
-            iCount++;
+        if (questions.isEmpty()) {
+            throw new EmptyCollectionException();
         }
-        throw new EmptyCollectionException();
+        Random generator = new Random();
+        int indexRandom = generator.nextInt(questions.size());
+        List<Question> listQuestions = new ArrayList<Question>(questions);
+        Question question = listQuestions.get(indexRandom);
+        return question;
     }
 }

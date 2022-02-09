@@ -17,13 +17,28 @@ public class ExaminerServiceImpl implements ExaminerService {
         this.questionService = questionService;
     }
 
-    private Set<Question> questionsForJavaExam = new HashSet<>();
+//    private Set<Question> questionsForJavaExam;
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        if (amount <= 0 || amount < questionService.getAll().size()) {
+        if (amount <= 0 || amount > questionService.getAll().size()) {
             throw new IncorrectNumberOfQuestionsException();
         }
-        return null;
+        Set<Question> questionsForJavaExam = new HashSet<>();
+        int i = 0;
+        while (i < amount) {
+            Question question = questionService.getRandomQuestion();
+            if (i == 0) {
+                questionsForJavaExam.add(question);
+                i++;
+                continue;
+            }
+            if (questionsForJavaExam.contains(question)) {
+                continue;
+            }
+            questionsForJavaExam.add(question);
+            i++;
+        }
+        return questionsForJavaExam;
     }
 }
